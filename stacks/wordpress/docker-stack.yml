@@ -2,6 +2,8 @@ version: '3'
 
 services:
    db:
+     networks:
+      - proxy_agent_network
      image: hypriot/rpi-mysql
      volumes:
        - db_data:/var/lib/mysql
@@ -14,8 +16,16 @@ services:
 
    wordpress:
      image: wordpress:latest
+     networks:
+      - proxy_agent_network
      ports:
        - 80
+     deploy:
+      replicas: 3
+      labels:
+        - traefik.backend=:${YOUR_FQDN_DOMAIN}
+        - traefik.port=80
+        - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
