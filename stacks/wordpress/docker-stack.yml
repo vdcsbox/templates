@@ -2,11 +2,13 @@ version: '3'
 
 services:
    db:
+     image: hypriot/rpi-mysql
      networks:
       - proxy_agent_network
-     image: hypriot/rpi-mysql
      volumes:
        - db_data:/var/lib/mysql
+     deploy:
+      replicas: 1
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -21,7 +23,7 @@ services:
      ports:
        - 80
      deploy:
-      replicas: 3
+      replicas: 1
       labels:
         - traefik.backend=:${YOUR_FQDN_DOMAIN}
         - traefik.port=80
@@ -34,3 +36,7 @@ services:
 
 volumes:
     db_data:
+
+networks:
+  proxy_agent_network:
+    external: true
