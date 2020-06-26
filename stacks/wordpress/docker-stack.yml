@@ -22,8 +22,6 @@ services:
      image: wordpress:latest
      networks:
       - proxy_agent_network
-     ports:
-       - 80
      deploy:
       replicas: 1
       labels:
