@@ -5,8 +5,6 @@ services:
      image: hypriot/rpi-mysql
      networks:
       - proxy_agent_network
-     ports:
-      - "3306:3306"
      volumes:
        - db_data:/var/lib/mysql
      deploy:
