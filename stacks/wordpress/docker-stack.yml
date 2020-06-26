@@ -1,26 +1,6 @@
 version: '3'
 
-services:
-   wordpress:
-     image: wordpress:latest
-     networks:
-      - proxy_agent_network
-      depends_on:
-      - db
-     deploy:
-      replicas: 1
-      labels:
-        - traefik.enable=true
-        - traefik.backend=:${YOUR_FQDN_DOMAIN}
-        - traefik.port=80
-        - traefik.docker.network=proxy_agent_network
-        - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
-     restart: always
-     environment:
-       WORDPRESS_DB_HOST: db:3306
-       WORDPRESS_DB_USER: ${MYSQL_USER}
-       WORDPRESS_DB_PASSWORD: ${MYSQL_USER_PASSWORD}
-       
+services:  
    db:
      image: hypriot/rpi-mysql
      networks:
@@ -35,7 +15,25 @@ services:
        MYSQL_DATABASE: ${MYSQL_DATABASE}
        MYSQL_USER: ${MYSQL_USER}
        MYSQL_PASSWORD: ${MYSQL_USER_PASSWORD}
-       
+  
+   wordpress:
+     image: wordpress:latest
+     networks:
+      - proxy_agent_network
+     deploy:
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.backend=:${YOUR_FQDN_DOMAIN}
+        - traefik.port=80
+        - traefik.docker.network=proxy_agent_network
+        - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: ${MYSQL_USER}
+       WORDPRESS_DB_PASSWORD: ${MYSQL_USER_PASSWORD}
+     
 volumes:
     db_data:
 
