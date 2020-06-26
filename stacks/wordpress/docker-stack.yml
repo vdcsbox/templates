@@ -22,7 +22,6 @@ services:
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
         - traefik.docker.network=proxy_agent_network
      networks:
-      - default
       - proxy_agent_network
      restart: always
      environment:
