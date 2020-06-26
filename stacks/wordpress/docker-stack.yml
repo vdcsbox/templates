@@ -22,6 +22,8 @@ services:
      image: wordpress:latest
      networks:
       - proxy_agent_network
+      depends_on:
+      - db
      deploy:
       replicas: 1
       labels:
