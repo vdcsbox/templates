@@ -15,7 +15,7 @@ services:
    wordpress:
      image: wordpress:latest
      ports:
-       - 80:80
+       - 80
      deploy:
       labels:
         - traefik.port=80
