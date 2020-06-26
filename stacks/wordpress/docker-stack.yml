@@ -3,6 +3,8 @@ version: '3'
 services:  
    db:
      image: hypriot/rpi-mysql
+     networks:
+      - proxy_agent_network
      volumes:
        - db_data:/var/lib/mysql
      restart: always
