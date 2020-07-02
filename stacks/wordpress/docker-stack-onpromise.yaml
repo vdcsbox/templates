@@ -22,8 +22,6 @@ services:
         - traefik.port=80
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
         - traefik.docker.network=vdcsproxy_traefik-net
-     networks:
-      - vdcsproxy_traefik-net
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
