@@ -39,6 +39,7 @@ services:
 
 volumes: 
   wp_data:
+  db_data:
 
 networks:
   vdcsproxy_traefik-net:
