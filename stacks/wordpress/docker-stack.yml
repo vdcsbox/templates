@@ -6,7 +6,8 @@ services:
      networks:
       - proxy_agent_network
      volumes:
-       - db_data:/var/lib/mysql
+       - /var/run/docker.sock:/var/run/docker.sock
+       - /mnt/ssi-gfs/wp/db_data:/mnt/ssi-gfs/wp/db_data
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -18,11 +19,15 @@ services:
      image: wordpress:latest
      ports:
        - 80
+     volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
+     - wp_data:/mnt/ssi-gfs/wp/wp_data
      deploy:
       labels:
-        - traefik.port=80
+        - traefik.enable=true
+        - traefik.port=30013
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
-        - traefik.docker.network=proxy_agent_network
+        - traefik.docker.network=vdcsproxy_traefik-net
      networks:
       - proxy_agent_network
      restart: always
@@ -32,7 +37,7 @@ services:
        WORDPRESS_DB_PASSWORD: wordpress
      
 volumes:
-    db_data:
+    wp_data:
 
 networks:
   proxy_agent_network:
