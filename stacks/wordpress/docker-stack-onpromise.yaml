@@ -6,7 +6,6 @@ services:
      networks:
       - vdcsproxy_traefik-net
      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
         - db_data:/var/lib/mysql    
      restart: always
      environment:
