@@ -6,7 +6,8 @@ services:
      networks:
       - vdcsproxy_traefik-net
      volumes:
-        - db_data:/var/lib/mysql
+        - /var/run/docker.sock:/var/run/docker.sock
+        - /mnt/ssi-gfs/wp/db_data:/var/lib/mysql      
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -17,7 +18,7 @@ services:
    wordpress:
      image: wordpress:latest
      ports:
-       - 80
+       - 30013
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - wp_data:/mnt/ssi-gfs/wp/wp_data
@@ -36,7 +37,6 @@ services:
        WORDPRESS_DB_PASSWORD: wordpress
      
 volumes:
-    db_data:
     wp_data:
 
 networks:
