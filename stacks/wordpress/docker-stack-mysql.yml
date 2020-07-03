@@ -3,8 +3,6 @@ version: '3'
 services:  
    db:
      image: hypriot/rpi-mysql
-     networks:
-      - vdcsproxy_traefik-net
      volumes:
         - db_data:${WEB_VOL}/db_data/var/lib/mysql   
      restart: always
