@@ -4,7 +4,7 @@ services:
    db:
      image: hypriot/rpi-mysql
      volumes:
-        - db_data::/var/lib/mysql 
+        - db_data:/var/lib/mysql 
         - .${WEB_VOL}/db_data:${WEB_VOL}/db_data    
      restart: always
      environment:
