@@ -3,8 +3,6 @@ version: '3'
 services:  
    db:
      image: hypriot/rpi-mysql
-     networks:
-      - web_proxy
      volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - db_data::/var/lib/mysql 
@@ -28,8 +26,6 @@ services:
         - traefik.port=${HOST_PORT}
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
         - traefik.docker.network=vdcsproxy_traefik-net
-     networks:
-      - web_proxy
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
