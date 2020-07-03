@@ -4,6 +4,7 @@ services:
    db:
      image: hypriot/rpi-mysql
      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
         - db_data:${WEB_VOL}/db_data/var/lib/mysql   
      restart: always
      environment:
@@ -15,6 +16,7 @@ services:
    wordpress:
      image: wordpress:latest
      volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
      - wp_data:${WEB_VOL}/wp_data/var/www/html
      deploy:
       labels:
@@ -36,5 +38,5 @@ volumes:
   wp_data:
   
 networks:
-  vdcsproxy_traefik-net:
+  ssi_traefik-net:
     external: true
