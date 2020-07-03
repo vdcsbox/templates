@@ -7,7 +7,8 @@ services:
       - web_proxy
      volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - db_data:${WEB_VOL}/db_data/var/lib/mysql    
+        - db_data::/var/lib/mysql 
+        - .${WEB_VOL}/db_data:${WEB_VOL}/db_data    
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -19,7 +20,8 @@ services:
      image: wordpress:latest
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - wp_data:${WEB_VOL}/wp_data  
+     - wp_data:/var/www/html
+     - .${WEB_VOL}/wp_data :${WEB_VOL}/wp_data  
      deploy:
       labels:
         - traefik.enable=true
