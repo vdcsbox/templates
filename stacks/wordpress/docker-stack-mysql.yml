@@ -17,8 +17,6 @@ services:
   
    wordpress:
      image: wordpress:latest
-     ports:
-       - ${HOST_PORT}:${CONT_PORT}
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - wp_data:${WEB_VOL}/wp_data  
