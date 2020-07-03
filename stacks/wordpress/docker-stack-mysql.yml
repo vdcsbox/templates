@@ -4,10 +4,10 @@ services:
    db:
      image: hypriot/rpi-mysql
      networks:
-      - vdcsproxy_traefik-net
+      - web_proxy
      volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - ${WEB_VOL}/db_data:/var/lib/mysql    
+        - db_data:${WEB_VOL}/db_data/var/lib/mysql    
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -27,7 +27,7 @@ services:
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
         - traefik.docker.network=vdcsproxy_traefik-net
      networks:
-      - vdcsproxy_traefik-net
+      - web_proxy
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
@@ -36,8 +36,9 @@ services:
        WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes: 
+  db_data:
   wp_data:
   
 networks:
-  vdcsproxy_traefik-net:
+  web_proxy:
     external: true
