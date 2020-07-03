@@ -4,7 +4,7 @@ services:
    db:
      image: hypriot/rpi-mysql
      volumes:
-        - ${WEB_VOL}/db_data:/var/lib/mysql   
+        - db_data:${WEB_VOL}/db_data/var/lib/mysql   
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -15,7 +15,7 @@ services:
    wordpress:
      image: wordpress:latest
      volumes:
-     - ${WEB_VOL}/wp_data:/var/www/html
+     - wp_data:${WEB_VOL}/wp_data/var/www/html
      deploy:
       labels:
         - traefik.enable=true
@@ -30,8 +30,7 @@ services:
        WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes: 
-  ${WEB_VOL}/db_data:
-  ${WEB_VOL}/wp_data:
+  db_data:
   
 networks:
   vdcsproxy_traefik-net:
