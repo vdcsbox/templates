@@ -7,7 +7,7 @@ services:
       - vdcsproxy_traefik-net
      volumes:
         - /var/run/docker.sock:/var/run/docker.sock
-        - db_data:/var/lib/mysql    
+        - mysql_data:/var/lib/mysql    
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -21,7 +21,7 @@ services:
        - 80
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - wp_data:/var/www/html  
+     - web_data:/var/www/html  
      deploy:
       labels:
         - traefik.enable=true
@@ -38,8 +38,8 @@ services:
        WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes: 
-  wp_data:
-  db_data:
+  mysql_data:
+  web_data:
 
 networks:
   vdcsproxy_traefik-net:
