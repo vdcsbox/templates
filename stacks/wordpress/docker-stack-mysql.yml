@@ -4,9 +4,8 @@ services:
    db:
      image: hypriot/rpi-mysql
      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
         - db_data::/var/lib/mysql 
-        - ${WEB_VOL}/db_data:${WEB_VOL}/db_data    
+        - .${WEB_VOL}/db_data:${WEB_VOL}/db_data    
      restart: always
      environment:
        MYSQL_ROOT_PASSWORD: ${MYSQL_DATABASE_PASSWORD}
@@ -17,9 +16,8 @@ services:
    wordpress:
      image: wordpress:latest
      volumes:
-     - /var/run/docker.sock:/var/run/docker.sock
      - wp_data:/var/www/html
-     - ${WEB_VOL}/wp_data :${WEB_VOL}/wp_data  
+     - .${WEB_VOL}/wp_data :${WEB_VOL}/wp_data  
      deploy:
       labels:
         - traefik.enable=true
@@ -38,5 +36,5 @@ volumes:
   wp_data:
   
 networks:
-  web_proxy:
+  vdcsproxy_traefik-net:
     external: true
