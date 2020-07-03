@@ -32,6 +32,7 @@ services:
        WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
 
 volumes: 
+  wp_data:
   
 networks:
   ssi_traefik-net:
