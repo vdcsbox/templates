@@ -19,8 +19,7 @@ services:
      image: wordpress:latest
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-     - wp_data:/var/www/html
-     - wp_data:${WEB_VOL}
+     - wp_data:${WEB_VOL}/wp_data
      deploy:
       labels:
         - traefik.enable=true
