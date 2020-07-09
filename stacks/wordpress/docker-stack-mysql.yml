@@ -19,6 +19,7 @@ services:
      image: wordpress:latest
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
+     - /usr/local/etc/php/conf.d/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
      - wp_data:/var/www/html
      deploy:
       labels:
