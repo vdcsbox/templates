@@ -4,7 +4,7 @@ services:
    db:
      image: hypriot/rpi-mysql
      networks:
-      - vdcsproxy_traefik-net
+      - vdcsproxy_internal
      volumes:
         - /var/run/docker.sock:/var/run/docker.sock
         - ${WEB_VOL}/db_data:/var/lib/mysql   
@@ -17,6 +17,11 @@ services:
   
    wordpress:
      image: wordpress:latest
+     networks:
+      - vdcsproxy_traefik-public	
+      - vdcsproxy_internal
+     depends_on:
+      - db
      volumes:
      - /var/run/docker.sock:/var/run/docker.sock
      - /usr/local/etc/php/conf.d/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
@@ -26,9 +31,7 @@ services:
         - traefik.enable=true
         - traefik.port=${HOST_PORT}
         - traefik.frontend.rule=Host:${YOUR_FQDN_DOMAIN}
-        - traefik.docker.network=vdcsproxy_traefik-net
-     networks:
-      - vdcsproxy_traefik-net
+        - traefik.docker.network=vdcsproxy_traefik-public	
      restart: always
      environment:
        WORDPRESS_DB_HOST: db:3306
@@ -40,5 +43,8 @@ volumes:
   wp_data:
   
 networks:
-  vdcsproxy_traefik-net:
+  vdcsproxy_traefik-public:
     external: true
+  vdcsproxy_internal:
+    driver_opts:
+      encrypted: ""
